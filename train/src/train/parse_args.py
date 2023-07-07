@@ -2,6 +2,7 @@ from argparse import ArgumentParser, Namespace
 from dataclasses import dataclass
 import os
 import sys
+import torch
 
 from transformers import TrainingArguments
 
@@ -62,9 +63,42 @@ def args_to_config() -> Namespace:
         default=1,
     )
     arg_parser.add_argument("--weight_decay", type=float, default=0.01)
+
+    # TrainingArguments options
     arg_parser.add_argument("--bf16", action="store_false")
-    arg_parser.add_argument("--save_strategy", type=str, default="no")
+    arg_parser.add_argument("--save_strategy", type=str, default="epoch")
+    arg_parser.add_argument("--eval_strategy", type=str, default="epoch")
     arg_parser.add_argument("--report_to", type=str, default="tensorboard")
     arg_parser.add_argument("--use_cache", action="store_true")
+
+    # bitsandbytes options
+    arg_parser.add_argument("--load_in_4_bit", action="store_false")
+    arg_parser.add_argument("--bnb_4bit_use_double_quant", action="store_false")
+    arg_parser.add_argument("--bnb_4bit_quant_type", type=str, default="nf4")
+    arg_parser.add_argument(
+        "--bnb_4bit_compute_dtype",
+        type=torch.dtype,
+        default=torch.bfloat16
+    )
+
+    # additional model options
+    arg_parser.add_argument("--trust_remote_code", action="store_false")
+    arg_parser.add_argument("--device_map", type=str, default="auto")
+
+    # LORA options
+    arg_parser.add_argument("--lora_rank", type=int, default=8)
+    arg_parser.add_argument("--lora_alpha", type=int, default=32)
+    arg_parser.add_argument("--lora_dropout", type=float, default=0.05)
+    arg_parser.add_argument("--lora_bias", type=str, default="none")
+    arg_parser.add_argument("--lora_task_type", type=str, default="CAUSAL_LM")
+    arg_parser.add_argument(
+        "--lora_target_modules",
+        type=str,
+        nargs="+",
+        default=["query_key_value", "dense", "dense_h_to_4h", "dense_4h_to_h"]
+    )
+
+    # DataCollator options
+    arg_parser.add_argument("--mlm", action="store_true")
 
     return arg_parser.parse_args(sys.argv[1:])

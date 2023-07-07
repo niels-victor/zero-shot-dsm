@@ -1,3 +1,4 @@
+pip==23.1.2
 torch==2.0.1
 bitsandbytes==0.39.1
 datasets

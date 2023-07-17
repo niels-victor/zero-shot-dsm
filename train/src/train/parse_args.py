@@ -72,7 +72,7 @@ def args_to_config() -> Namespace:
     arg_parser.add_argument("--use_cache", action="store_true")
 
     # bitsandbytes options
-    arg_parser.add_argument("--load_in_4_bit", action="store_false")
+    arg_parser.add_argument("--load_in_4bit", action="store_false")
     arg_parser.add_argument("--bnb_4bit_use_double_quant", action="store_false")
     arg_parser.add_argument("--bnb_4bit_quant_type", type=str, default="nf4")
     arg_parser.add_argument(

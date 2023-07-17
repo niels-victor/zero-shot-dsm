@@ -34,7 +34,7 @@ def train(args: Namespace) -> None:
 
     data_collator = DataCollatorForLanguageModeling(
         tokenizer=tokenizer,
-        mlm=args.collator_mlm
+        mlm=args.mlm
     )
 
     target_modules = vars(args)["lora_target_modules"]

@@ -3,6 +3,8 @@ bitsandbytes==0.39.1
 datasets
 py7zr
 einops
+--extra-index-url https://developer.download.nvidia.com/compute/redist 
+nvidia-dali-cuda110
 tensorboardX
 git+https://github.com/huggingface/transformers.git@850cf4af0ce281d2c3e7ebfc12e0bc24a9c40714
 git+https://github.com/huggingface/peft.git@e2b8e3260d3eeb736edf21a2424e89fe3ecf429d
